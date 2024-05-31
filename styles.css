@@ -1,0 +1,82 @@
+body {
+  font-size: 25px;
+  font-weight: 400;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.container {
+  margin: 50px;
+  padding: 10px;
+  width: 250px;
+  height: 400px;
+  background-color: black;
+  color: white;
+  border-radius: 25px;
+}
+/* ----------------------------------- */
+.line {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.output {
+  height: 25%;
+  grid-template-columns: 1fr;
+  justify-items: right;
+  align-items: end;
+  font-size: 3em;
+}
+
+.zero {
+  grid-template-columns: 2fr 1fr 1fr;
+}
+/*  ----------------------------------*/
+
+.btn {
+  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: rgb(59, 59, 59);
+  margin: 5px;
+  padding: 10px;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 1em;
+}
+
+.btn:hover {
+  background-color: rgb(77, 77, 77);
+}
+
+.btn-zero {
+  width: 110px;
+  padding-left: 15px;
+  justify-items: left;
+}
+
+/* ------------------------------- */
+.main-operation {
+  background-color: rgb(255, 153, 0);
+}
+
+.main-operation:hover {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  transition-duration: 0.15s;
+}
+
+.secondary-operation {
+  font-size: 0.8em;
+  background-color: rgb(160, 160, 160);
+  color: black;
+}
+
+.secondary-operation:hover {
+  background-color: rgb(190, 190, 190);
+}
