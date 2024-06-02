@@ -1,14 +1,13 @@
 body {
   font-size: 25px;
-  font-weight: 400;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .container {
   margin: 50px;
   padding: 10px;
-  width: 250px;
-  height: 400px;
+  width: 245px;
+  height: 415px;
   background-color: black;
   color: white;
   border-radius: 25px;
@@ -52,6 +51,7 @@ body {
 
 .btn:hover {
   background-color: rgb(77, 77, 77);
+  transition-duration: 0.1s;
 }
 
 .btn-zero {
@@ -68,7 +68,7 @@ body {
 .main-operation:hover {
   background-color: rgb(255, 255, 255);
   color: black;
-  transition-duration: 0.15s;
+  transition-duration: 0.1s;
 }
 
 .secondary-operation {
@@ -79,4 +79,13 @@ body {
 
 .secondary-operation:hover {
   background-color: rgb(190, 190, 190);
+  transition-duration: 0.1s;
+}
+
+.author {
+  font-size: 0.5em;
+  font-style: italic;
+  display: grid;
+  justify-items: center;
+  align-items: center;
 }

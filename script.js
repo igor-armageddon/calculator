@@ -1,6 +1,5 @@
-const maxLen = 10;
-
-let output = document.getElementById('output-value');
+let output;
+const DIGIT_LIMIT = 10;
 let firstNumber = '';
 let secondNumber = '';
 let currentOperation = null;
@@ -8,8 +7,15 @@ let shouldResetDisplay = false;
 let lastOperation = null;
 let lastOperand = '';
 
+document.addEventListener('DOMContentLoaded', function () {
+  output = document.getElementById('output-value');
+  if (!output) {
+    console.error('Element with id "output-value" not found');
+  }
+});
+
 function enterNum(num) {
-  if (output.innerText.length >= maxLen) return;
+  if (!output) return;
   if (shouldResetDisplay) {
     output.innerText = '';
     shouldResetDisplay = false;
@@ -19,6 +25,7 @@ function enterNum(num) {
 }
 
 function setOperation(operation) {
+  if (!output) return;
   if (currentOperation !== null) calculate();
   firstNumber = output.innerText;
   currentOperation = operation;
@@ -27,6 +34,11 @@ function setOperation(operation) {
 }
 
 function calculate() {
+  if (!output) {
+    console.error('Output element is not initialized');
+    return;
+  }
+
   if (currentOperation === null && lastOperation === null) return;
 
   if (shouldResetDisplay) {
@@ -40,14 +52,15 @@ function calculate() {
     lastOperand = secondNumber;
     lastOperation = currentOperation;
   }
-
   let result = operate(
     currentOperation,
     parseFloat(firstNumber),
     parseFloat(secondNumber)
   );
 
-  output.innerText = result.toString().slice(0, maxLen);
+  result = limitToMaxDigits(result);
+
+  output.innerText = result.toString();
   firstNumber = output.innerText;
   secondNumber = '';
   currentOperation = null;
@@ -56,6 +69,10 @@ function calculate() {
 }
 
 function reset() {
+  if (!output) {
+    console.error('Output element is not initialized');
+    return;
+  }
   output.innerText = '0';
   firstNumber = '';
   secondNumber = '';
@@ -82,6 +99,10 @@ function operate(operation, a, b) {
 }
 
 function enterDecimal() {
+  if (!output) {
+    console.error('Output element is not initialized');
+    return;
+  }
   if (shouldResetDisplay) {
     output.innerText = '0';
     shouldResetDisplay = false;
@@ -93,10 +114,52 @@ function enterDecimal() {
 }
 
 function toggleSign() {
+  if (!output) {
+    console.error('Output element is not initialized');
+    return;
+  }
   output.innerText = (parseFloat(output.innerText) * -1).toString();
 }
 
 function calculateFontSize() {
+  if (!output) {
+    console.error('Output element is not initialized');
+    return;
+  }
   output.style.fontSize =
-    (3 - (output.innerText.length / maxLen) * 1.5).toFixed(2) + 'em';
+    (3 - (output.innerText.length / DIGIT_LIMIT) * 1.5).toFixed(2) + 'em';
+}
+
+function sqrt() {
+  if (!output) {
+    console.error('Output element is not initialized');
+    return;
+  }
+  output.innerText = limitToMaxDigits(
+    Math.sqrt(parseFloat(output.innerText)).toString()
+  );
+  calculateFontSize();
+}
+
+function limitToMaxDigits(number) {
+  let parts = number.toString().split('.');
+  let beforeDecimal = parts[0];
+  let afterDecimal = parts[1] || '';
+
+  let totalDigits = beforeDecimal.length + afterDecimal.length;
+
+  if (totalDigits > DIGIT_LIMIT) {
+    if (beforeDecimal.length >= DIGIT_LIMIT) {
+      beforeDecimal = beforeDecimal.slice(0, DIGIT_LIMIT);
+      afterDecimal = '';
+    } else {
+      let remainingDigits = DIGIT_LIMIT - beforeDecimal.length;
+      afterDecimal = afterDecimal.slice(0, remainingDigits);
+    }
+  }
+
+  let newNumber = afterDecimal
+    ? `${beforeDecimal}.${afterDecimal}`
+    : beforeDecimal;
+  return newNumber;
 }
